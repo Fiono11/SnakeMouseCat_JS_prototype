@@ -3,8 +3,7 @@
 A game prototype built with Phaser.js . 
 
 ### Requirements
-
-We need [Node.js](https://nodejs.org) to install and run scripts.
+[Node.js](https://nodejs.org) to install and run scripts.
 
 ## Install and run
 
