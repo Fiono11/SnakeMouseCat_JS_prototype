@@ -47,6 +47,7 @@ function preload() {
     //players
     //mouse
     this.load.spritesheet('mouse', 'assets/img/mouse_sheet.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('wall', 'assets/img/snakeBody.png', { frameWidth: 24, frameHeight: 24 });
 
 }
 
@@ -67,27 +68,27 @@ function create() {
 
     //Background
     var gameBg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameBg');
-    splashScreen = this.add.image(GAME_WIDTH/2, GAME_HEIGHT/2, 'splashScreen');
-
+    
     //walls
     walls = this.physics.add.staticGroup();
     
-    for(var i = 0; i < 600; i = i + 32 ){
-        walls.create(600, i);
+    for(var i = 12; i < 600; i = i + 24 ){
+        walls.create(580, i, 'wall');
     }
-    walls.visible = false;
+    // walls.alpha = 0;
     
     //walls.create(600, 400, 'ground');
     
     // Create player
-    mouse = this.physics.add.sprite(250, 250, "mouse");
+    mouse = this.physics.add.sprite(150, 300, "mouse");
     
     // Player should collide with edges of the screen
     mouse.setCollideWorldBounds(true);
     
     this.physics.add.collider(mouse, walls);
     
-
+    splashScreen = this.add.image(GAME_WIDTH/2, GAME_HEIGHT/2, 'splashScreen');
+    
     // Create animations for player
     this.anims.create({
         key: "mouseLeft",
@@ -109,8 +110,8 @@ function create() {
         frames: this.anims.generateFrameNumbers("mouse", { start: 3, end: 3 }),
         repeat: -1
     });
-
-
+    
+    
 }
 
 function update() {
@@ -118,6 +119,9 @@ function update() {
     if (cursors.space.isDown) {
         splashScreen.visible = false
     }
+    
+    walls.visible = false;
+    walls.alpha = 0;
     
     //update players
     updateMouse();
