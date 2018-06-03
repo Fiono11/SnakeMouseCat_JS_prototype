@@ -73,11 +73,12 @@ function create() {
     walls = this.physics.add.staticGroup();
     
     for(var i = 12; i < 600; i = i + 24 ){
-        walls.create(580, i, 'wall');
+        walls.create(600, i, 'wall');
     }
-    // walls.alpha = 0;
-    
-    //walls.create(600, 400, 'ground');
+
+    walls.children.iterate(function (child) {
+        child.alpha = 0;
+    });
     
     // Create player
     mouse = this.physics.add.sprite(150, 300, "mouse");
