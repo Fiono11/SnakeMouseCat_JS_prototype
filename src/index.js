@@ -4,8 +4,8 @@ import 'phaser';
 // GLOBAL VARIABLES
 const GAME_WIDTH = 678;
 const GAME_HEIGHT = 596;
-const PLAYER_SIZE = 24;
 
+var gameBg;
 var splashScreen;
 
 var cursors;
@@ -13,7 +13,12 @@ var cursors;
 var walls;
 
 var mouse;
+var cat;
+var snake;
+
 var mouseSpeed = 250;
+var catSpeed = 200;
+var snakeSpeed = 200;
 
 //Phaser Config
 var config = {
@@ -35,7 +40,6 @@ var config = {
     }
 };
 
-
 var game = new Phaser.Game(config);
 
 //preload all assets and assign object names
@@ -51,45 +55,28 @@ function preload() {
 
 }
 
-
 function create() {
-    // this.tweens.add({
-    //         targets: splashScreen,
-    //         y: -450,
-    //         duration: 3000,
-    //         ease: 'Power2',
-    //         //yoyo: true,
-    //         //loop: -1
-    //     });
-
 
     // Keyboard input
     cursors = this.input.keyboard.createCursorKeys();
 
     //Background
-    var gameBg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameBg');
-    
+    gameBg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameBg');
+
     //walls
     walls = this.physics.add.staticGroup();
-    
-    for(var i = 12; i < 600; i = i + 24 ){
-        walls.create(600, i, 'wall');
-    }
+    createWalls();
 
-    walls.children.iterate(function (child) {
-        child.alpha = 0;
-    });
-    
     // Create player
     mouse = this.physics.add.sprite(150, 300, "mouse");
-    
-    // Player should collide with edges of the screen
+
+    // Player and edges of the screen colliders
     mouse.setCollideWorldBounds(true);
-    
     this.physics.add.collider(mouse, walls);
-    
-    splashScreen = this.add.image(GAME_WIDTH/2, GAME_HEIGHT/2, 'splashScreen');
-    
+
+    //Splash Screen
+    splashScreen = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'splashScreen');
+
     // Create animations for player
     this.anims.create({
         key: "mouseLeft",
@@ -111,8 +98,7 @@ function create() {
         frames: this.anims.generateFrameNumbers("mouse", { start: 3, end: 3 }),
         repeat: -1
     });
-    
-    
+
 }
 
 function update() {
@@ -120,10 +106,7 @@ function update() {
     if (cursors.space.isDown) {
         splashScreen.visible = false
     }
-    
-    walls.visible = false;
-    walls.alpha = 0;
-    
+
     //update players
     updateMouse();
 }
@@ -151,4 +134,15 @@ function updateMouse() {
         mouse.setVelocityX(0);
         mouse.anims.play('mouseDown', true);
     }
+}
+
+function createWalls() {
+    //create right wall
+    for (var i = 12; i < 600; i = i + 24) {
+        walls.create(600, i, 'wall');
+    }
+    //make right wall hidden
+    walls.children.iterate(function (child) {
+        child.alpha = 0;
+    });
 }
