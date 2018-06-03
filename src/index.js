@@ -6,7 +6,11 @@ const GAME_WIDTH = 678;
 const GAME_HEIGHT = 596;
 const PLAYER_SIZE = 24;
 
+var splashScreen;
+
 var cursors;
+
+var walls;
 
 var mouse;
 var mouseSpeed = 250;
@@ -17,7 +21,6 @@ var config = {
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
     pixelArt: true,
-    autoFocus: true,
     physics: {
         default: "arcade",
         arcade: {
@@ -43,11 +46,6 @@ function preload() {
 
     //players
     //mouse
-    this.load.image('mouseUp', 'assets/img/mouseUp.png');
-    this.load.image('mouseRight', 'assets/img/mouseRight.png');
-    this.load.image('mouseDown', 'assets/img/mouseDown.png');
-    this.load.image('mouseLeft', 'assets/img/mouseLeft.png');
-
     this.load.spritesheet('mouse', 'assets/img/mouse_sheet.png', { frameWidth: 24, frameHeight: 24 });
 
 }
@@ -68,14 +66,27 @@ function create() {
     cursors = this.input.keyboard.createCursorKeys();
 
     //Background
-    //var splashScreen = this.add.image(GAME_WIDTH/2, GAME_HEIGHT/2, 'splashScreen');
     var gameBg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameBg');
+    splashScreen = this.add.image(GAME_WIDTH/2, GAME_HEIGHT/2, 'splashScreen');
 
+    //walls
+    walls = this.physics.add.staticGroup();
+    
+    for(var i = 0; i < 600; i = i + 32 ){
+        walls.create(600, i);
+    }
+    walls.visible = false;
+    
+    //walls.create(600, 400, 'ground');
+    
     // Create player
     mouse = this.physics.add.sprite(250, 250, "mouse");
-
+    
     // Player should collide with edges of the screen
     mouse.setCollideWorldBounds(true);
+    
+    this.physics.add.collider(mouse, walls);
+    
 
     // Create animations for player
     this.anims.create({
@@ -103,6 +114,11 @@ function create() {
 }
 
 function update() {
+    //start
+    if (cursors.space.isDown) {
+        splashScreen.visible = false
+    }
+    
     //update players
     updateMouse();
 }
