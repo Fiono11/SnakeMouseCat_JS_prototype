@@ -3,7 +3,7 @@
 A game prototype built with Phaser.js. 
 
 #Try the game (current stable progress):
-http://metalmethod.github.io/SnakeMouseCat_js_prototype
+https://metalmethod.github.io/SnakeMouseCat_JS_prototype/
 
 ### Requirements
 [Node.js](https://nodejs.org) to install and run scripts.
