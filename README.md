@@ -1,6 +1,8 @@
-# SnameMouseCat_js
+# SnakeMouseCat_js
 
 A game prototype built with Phaser.js . 
+Try the game in latest stable build:
+http://metalmethod.github.io/SnakeMouseCat_js_prototype
 
 ### Requirements
 [Node.js](https://nodejs.org) to install and run scripts.
